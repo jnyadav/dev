@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: apartment-library
+Implementation-Version: 1.0-SNAPSHOT
+Built-By: 700537
+Implementation-Vendor-Id: com.apart
+Build-Jdk: 1.8.0_162
+Implementation-URL: http://www.apartment.com/apartment-library
+Created-By: Maven Integration for Eclipse
+
