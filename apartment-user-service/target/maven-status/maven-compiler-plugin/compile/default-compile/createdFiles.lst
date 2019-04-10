@@ -1,0 +1,16 @@
+com\apartment\user\util\UserConstants.class
+com\apartment\user\api\UserController.class
+com\apartment\user\model\User.class
+com\apartment\user\model\ValidateUserResponseBean.class
+com\apartment\user\entity\UserKey.class
+com\apartment\user\repository\UserRepository.class
+com\apartment\user\config\SwaggerConfiguration.class
+com\apartment\user\entity\UserEntity.class
+com\apartment\user\exception\UserExceptionController.class
+com\apartment\user\service\UserService.class
+com\apartment\user\model\UserServiceResponse.class
+com\apartment\user\exception\UserCustomException.class
+com\apartment\user\service\UserServiceImpl.class
+com\apartment\user\ApplicationStarter.class
+com\apartment\user\exception\ErrorDetails.class
+com\apartment\user\model\UserKey.class
