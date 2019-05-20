@@ -65,6 +65,8 @@ public class BillingServiceImpl implements BillingService {
 				System.out.println("lastBillGenDate month=> " + this.monthNames[month]);
 				//to get the next month
 				month = month + 1;
+				if(month == 12)
+					month = 0;
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
