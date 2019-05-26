@@ -23,7 +23,7 @@ public class BillingController {
 	private BillingService billingService;
 	
 	
-	@GetMapping("/generate")
+	@PostMapping("/generate")
 	public String generateBill(@RequestBody BillingPojo billingPojo) {
 		
 		System.out.println(billingPojo);

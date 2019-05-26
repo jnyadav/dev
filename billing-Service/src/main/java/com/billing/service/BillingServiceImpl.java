@@ -4,6 +4,8 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Month;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.List;
 
@@ -41,16 +43,17 @@ public class BillingServiceImpl implements BillingService {
 		// TODO Auto-generated method stub
 		String format = "dd-MMM-yyyy";
 		DateFormat df = new SimpleDateFormat(format);
-		int month = -1;
+		Month month = null;
 
 		if (billingObj.getLastBillGentrnDate() == null || billingObj.getLastBillGentrnDate().equals("")) {
 
 			System.out.println("Last Bill Generation Date is blank!");
-			Date registrationDate = null;
+			LocalDate registrationDate = null;
 			try {
-				registrationDate = df.parse(billingObj.getApptRegistrationDate());
+				Date dt = df.parse(billingObj.getApptRegistrationDate());
+				registrationDate = dt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 				month = registrationDate.getMonth();
-				System.out.println("registrationDate month=> " + this.monthNames[month]);
+				System.out.println("registrationDate month=> " + month);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -58,15 +61,16 @@ public class BillingServiceImpl implements BillingService {
 
 		}else {
 			
-			Date lastBillGenDate = null;
+			LocalDate lastBillGenDate = null;
 			try {
-				lastBillGenDate = df.parse(billingObj.getLastBillGentrnDate());
+				Date dt = df.parse(billingObj.getLastBillGentrnDate());
+				lastBillGenDate = dt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 				month = lastBillGenDate.getMonth();
-				System.out.println("lastBillGenDate month=> " + this.monthNames[month]);
+				System.out.println("lastBillGenDate month=> " + month);
 				//to get the next month
-				month = month + 1;
+/*				month = month + 1;
 				if(month == 12)
-					month = 0;
+					month = 0;*/
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -75,9 +79,37 @@ public class BillingServiceImpl implements BillingService {
 		}
 		
 		AppartmentBilling apptBilling = new AppartmentBilling();
-		apptBilling.setForMonth(this.monthNames[month]);
+		apptBilling.setForMonth(month.name());
+		Month monthFinal = month;
+		getAllMonthlyCharges().forEach(
+				monthlyCharge-> {
+					
+					
+					
+					System.out.println("effective_date: " + monthlyCharge.getEffectiveDate() + ", per_unit_charge:"
+							+ monthlyCharge.getPerUnitCharge());
+					
+					try {
+						Date dt = df.parse(monthlyCharge.getEffectiveDate());
+						LocalDate effectiveDt = dt.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+						Month tempMonth = effectiveDt.getMonth() ;
+						System.out.println("tempMonth: "+tempMonth);
+						
+						if(tempMonth.getValue() == monthFinal.getValue()) {
+							
+							Double billAmount = (double) (monthlyCharge.getPerUnitCharge() * billingObj.getNoOfUnits());
+							apptBilling.setBillAmount(billAmount);
+							
+						}
+					} catch (ParseException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+				);
 		
-		for (MonthlyCharge monthlyCharge : getAllMonthlyCharges()) {
+		
+	/*	for (MonthlyCharge monthlyCharge : getAllMonthlyCharges()) {
 			
 			
 
@@ -102,7 +134,7 @@ public class BillingServiceImpl implements BillingService {
 			
 			
 			
-		}
+		}*/
 		
 		apptBilling.setApptId(billingObj.getApptId());
 		
@@ -124,7 +156,7 @@ public class BillingServiceImpl implements BillingService {
 //			System.out.println(itr.next());
 //		}
 		return monthlyCharges;
-
+ 
 	}
 
 	@Override
