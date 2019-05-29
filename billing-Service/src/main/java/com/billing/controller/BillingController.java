@@ -2,8 +2,11 @@ package com.billing.controller;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,12 +27,12 @@ public class BillingController {
 	
 	
 	@PostMapping("/generate")
-	public String generateBill(@RequestBody BillingPojo billingPojo) {
+	public List<AppartmentBilling> generateBill(@RequestBody BillingPojo billingPojo) {
 		
 		System.out.println(billingPojo);
 		this.billingService.generateBill(billingPojo);
 		
-		return "bill is generated successfully!";
+		return getApptBills(billingPojo.getApptId());
 	}
 	
 	@PostMapping("add-monthly-charge")
@@ -47,6 +50,12 @@ public class BillingController {
 	@GetMapping("get-appt-bills")
 	public List<AppartmentBilling> getApptBills(){
 		return this.billingService.getApptBills();
+	}
+	
+	@GetMapping("get-appt-bills/{apptId}")
+	
+	public List<AppartmentBilling> getApptBills(@PathVariable("apptId") Long apptId){
+		return this.billingService.getApptBills(apptId);
 	}
 
 }

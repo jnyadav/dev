@@ -13,5 +13,6 @@ public interface BillingService {
 	
 	public List<MonthlyCharge> getAllMonthlyCharges();
 	public List<AppartmentBilling> getApptBills();
+	public List<AppartmentBilling> getApptBills(Long apptId);
 
 }
