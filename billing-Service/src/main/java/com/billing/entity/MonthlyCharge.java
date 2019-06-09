@@ -2,6 +2,8 @@ package com.billing.entity;
 
 
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -25,7 +27,7 @@ public class MonthlyCharge {
 	private Short perUnitCharge;
 	
 	@Column(name = "effective_Date")
-	private String effectiveDate;
+	private LocalDate effectiveDate;
 	
 	public MonthlyCharge() {
 		
@@ -47,11 +49,11 @@ public class MonthlyCharge {
 		this.perUnitCharge = perUnitCharge;
 	}
 
-	public String getEffectiveDate() {
+	public LocalDate getEffectiveDate() {
 		return effectiveDate;
 	}
 
-	public void setEffectiveDate(String effectiveDate) {
+	public void setEffectiveDate(LocalDate effectiveDate) {
 		this.effectiveDate = effectiveDate;
 	}
 

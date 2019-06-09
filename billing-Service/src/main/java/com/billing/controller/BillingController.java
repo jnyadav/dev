@@ -1,8 +1,7 @@
 package com.billing.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,7 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.billing.entity.AppartmentBilling;
 import com.billing.entity.MonthlyCharge;
+import com.billing.mapper.MonthlyChargeMapper;
 import com.billing.model.BillingPojo;
+import com.billing.model.MonthlyChargePojo;
 import com.billing.service.BillingService;
 
 @RestController
@@ -30,21 +31,27 @@ public class BillingController {
 	public List<AppartmentBilling> generateBill(@RequestBody BillingPojo billingPojo) {
 		
 		System.out.println(billingPojo);
-		this.billingService.generateBill(billingPojo);
+		return this.billingService.generateBill(billingPojo);
 		
-		return getApptBills(billingPojo.getApptId());
 	}
 	
 	@PostMapping("add-monthly-charge")
 	
-	public void addMonthlyCharge(@RequestBody MonthlyCharge monthlyCharge) {
+	public MonthlyCharge addMonthlyCharge(@RequestBody MonthlyChargePojo monthlyChargePojo) {
 		
-		this.billingService.addMonthlyCharge(monthlyCharge);
+		MonthlyCharge monthlyCharge = MonthlyChargeMapper.MonthlyChargePojoToMonthlyChargeEntity(monthlyChargePojo);
+		
+		return this.billingService.addMonthlyCharge(monthlyCharge);
 	}
 	
 	@GetMapping("get-monthly-charges")
-	public List<MonthlyCharge> getAllMonthlyCharges(){
-		return this.billingService.getAllMonthlyCharges();
+	public List<MonthlyChargePojo> getAllMonthlyCharges(){
+		List<MonthlyCharge> monthlyChargeList = this.billingService.getAllMonthlyCharges();
+		List<MonthlyChargePojo> monthlyChargePojoList = new ArrayList<>();
+		for(MonthlyCharge monthlyCharge: monthlyChargeList) {
+			monthlyChargePojoList.add(MonthlyChargeMapper.MonthlyChargeEntityToMonthlyChargePojo(monthlyCharge));
+		}
+		return monthlyChargePojoList;
 	}
 	
 	@GetMapping("get-appt-bills")

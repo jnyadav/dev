@@ -8,8 +8,8 @@ import com.billing.model.BillingPojo;
 
 public interface BillingService {
 	
-	public void addMonthlyCharge(MonthlyCharge monthlyCharge);
-	public void generateBill(BillingPojo billingObj);
+	public MonthlyCharge addMonthlyCharge(MonthlyCharge monthlyCharge);
+	public List<AppartmentBilling> generateBill(BillingPojo billingObj);
 	
 	public List<MonthlyCharge> getAllMonthlyCharges();
 	public List<AppartmentBilling> getApptBills();

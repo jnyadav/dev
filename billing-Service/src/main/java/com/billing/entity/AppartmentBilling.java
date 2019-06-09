@@ -1,6 +1,8 @@
 package com.billing.entity;
 
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,7 +29,7 @@ public class AppartmentBilling {
 	private Double billAmount;
 	
 	@Column(name="bill_generation_date")
-	private String billGenerationDate;
+	private LocalDate billGenerationDate;
 	
 	public AppartmentBilling() {
 		
@@ -57,11 +59,11 @@ public class AppartmentBilling {
 		this.billAmount = billAmount;
 	}
 
-	public String getBillGenerationData() {
+	public LocalDate getBillGenerationData() {
 		return billGenerationDate;
 	}
 
-	public void setBillGenerationData(String billGenerationDate) {
+	public void setBillGenerationData(LocalDate billGenerationDate) {
 		this.billGenerationDate = billGenerationDate;
 	}
 
