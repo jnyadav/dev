@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.seveneleven.rules</groupId>
-	<artifactId>store-rules-svc</artifactId>
+	<artifactId>age-verification-svc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>store-rules-svc</name>
+	<name>age-verification-svc</name>
 	<description>Spring Boot Project</description>
 
 	<properties>
