@@ -27,7 +27,7 @@ public class BillingController {
 	private BillingService billingService;
 	
 	
-	@PostMapping("/generate")
+	@PostMapping("/generate345")
 	public List<AppartmentBilling> generateBill(@RequestBody BillingPojo billingPojo) {
 		
 		System.out.println(billingPojo);
